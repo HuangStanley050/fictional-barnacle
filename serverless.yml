@@ -1,7 +1,7 @@
 # NOTE: update this with your service name
 service: todoGraphQL
 
-# Create an optimized package for our functions 
+# Create an optimized package for our functions
 package:
   individually: true
 
@@ -9,7 +9,9 @@ plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
-
+custom:
+  serverless-offline:
+    port: 8000
 provider:
   name: aws
   runtime: nodejs10.x
@@ -24,9 +26,17 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
 
 functions:
-  hello:
-    handler: handler.hello
+  graphql:
+    handler: handler.server
     events:
       - http:
-          path: hello
+          path: /
+          method: post
+          cors: true
+  playground:
+    handler: handler.playground
+    events:
+      - http:
+          path: /
           method: get
+          cors: true

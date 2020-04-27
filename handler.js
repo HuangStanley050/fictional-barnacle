@@ -1,20 +1,18 @@
 import { GraphQLServerLambda } from "graphql-yoga";
 
-const typeDefs = `
-  type Query {
-    hello(name: String): String!
-  }
-`;
-
 const resolvers = {
   Query: {
-    hello: (_, { name }) => `Hello ${name || "World"}`,
+    hello: (_, { name }) => `Hello world ${name}`,
   },
 };
 const lambda = new GraphQLServerLambda({
-  typeDefs,
+  typeDefs: "./schema.graphql",
   resolvers,
   context: (req) => ({ ...req }),
+  cors: {
+    origin: "*",
+    credentials: true,
+  },
 });
 
 exports.playground = async (event, context, callback) => {
