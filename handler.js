@@ -11,17 +11,7 @@ const lambda = new GraphQLServerLambda({
   context: (req) => ({ ...req }),
   cors: {
     origin: "*",
-    credentials: true,
   },
 });
-
-exports.playground = async (event, context, callback) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-  //await start();
-  return lambda.playgroundHandler(event, context, callback);
-};
-exports.server = async (event, context, callback) => {
-  context.callbackWaitsForEmptyEventLoop = false;
-  //await start();
-  return lambda.graphqlHandler(event, context, callback);
-};
+exports.server = lambda.graphqlHandler;
+exports.playground = lambda.playgroundHandler;
