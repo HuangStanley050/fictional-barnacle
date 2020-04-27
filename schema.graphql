@@ -1,5 +1,13 @@
 type Query {
   hello: String!
+  todos: [Todo!]!
+  todo(_id: ID!): Todo!
+}
+
+type Mutation {
+  signup(email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  createTodo(content: String!): Todo!
 }
 
 type User {
