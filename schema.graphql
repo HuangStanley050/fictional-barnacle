@@ -10,6 +10,7 @@ type User {
 type Todo {
   id: ID!
   content: String!
+  creator: User
 }
 type AuthPayload {
   token: String!
