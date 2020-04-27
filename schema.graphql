@@ -1,9 +1,9 @@
 type Query {
   hello: String!
-  todos: [Todo!]!
+  todos: [Todo]!
   todo(id: ID!): Todo!
-  user(email: String!): User!
-  users: [User!]!
+  user(email: String!): User
+  users: [User]
 }
 
 type Mutation {
@@ -19,10 +19,10 @@ type User {
 }
 type Todo {
   id: ID!
-  content: String!
-  creator: User
+  content: String
+  creator: User!
 }
 type AuthPayload {
   token: String!
-  user: User
+  user: User!
 }
