@@ -4,6 +4,26 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const mutation = {
+  login: async (parent, args, ctx, info) => {
+    await connectToDatabase();
+    try {
+      const user = await User.findOne({ email: args.email });
+      if (!user) {
+        throw new Error("No such user found");
+      }
+      const valid = await bcrypt.compare(args.password, user.password);
+      if (!valid) {
+        throw new Error("Invalid password");
+      }
+      //user.password = null;
+      return {
+        token: jwt.sign({ userId: user._id }, process.env.JWT_SECRET),
+        user,
+      };
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
   signup: async (parent, args, ctx, info) => {
     try {
       await connectToDatabase();
