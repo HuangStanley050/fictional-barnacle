@@ -1,7 +1,9 @@
 type Query {
   hello: String!
   todos: [Todo!]!
-  todo(_id: ID!): Todo!
+  todo(id: ID!): Todo!
+  user(email: String!): User!
+  users: [User!]!
 }
 
 type Mutation {

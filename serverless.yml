@@ -12,6 +12,8 @@ plugins:
 custom:
   serverless-offline:
     port: 8000
+environment:
+  MONGO_URL: ${env:MONGO_URL}
 provider:
   name: aws
   runtime: nodejs10.x
