@@ -15,7 +15,7 @@ type Mutation {
 type User {
   id: ID!
   email: String!
-  todos: [Todo!]!
+  todos: [Todo]
 }
 type Todo {
   id: ID!
