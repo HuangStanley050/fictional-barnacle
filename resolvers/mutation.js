@@ -13,14 +13,24 @@ const mutation = {
     // console.log(userId);
     await connectToDatabase();
     try {
-      const user = await User.findOne({ _id: userId }).lean();
+      //const user = await User.findOne({ _id: userId }).lean();
       const newTodo = new Todo({
         content: args.content,
         creator: mongoose.Types.ObjectId(userId),
       });
       let result = await newTodo.save();
-      //console.log({ ...result, creator: { ...user } });
-      return { ...result._doc, creator: { ...user } };
+      let todoId = result._doc._id;
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $addToSet: { todos: mongoose.Types.ObjectId(todoId) },
+        },
+        {
+          new: true,
+        }
+      ).lean();
+
+      return { ...result._doc };
     } catch (err) {
       throw new Error(err);
     }

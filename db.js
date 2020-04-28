@@ -11,7 +11,10 @@ export const connectToDatabase = async () => {
   }
 
   console.log("=> using new database connection");
-  const db = await mongoose.connect(url, { useNewUrlParser: true });
+  const db = await mongoose.connect(url, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  });
   isConnected = db.connections[0].readyState;
   return;
 };
