@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 const authenticate = (context) => {
   const Authorization = context.event.headers.Authorization;
   if (Authorization) {

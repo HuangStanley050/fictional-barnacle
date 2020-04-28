@@ -1,9 +1,30 @@
 import { connectToDatabase } from "../db";
 import User from "../models/User";
+import Todo from "../models/Todo";
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import checkAuth from "../checkAuth";
 
 const mutation = {
+  createTodo: async (parent, args, ctx, info) => {
+    const userId = checkAuth(ctx);
+    // console.log("this is creat todo");
+    // console.log(userId);
+    await connectToDatabase();
+    try {
+      //const user = await User.findOne({ _id: userId });
+      const newTodo = new Todo({
+        content: args.content,
+        creator: mongoose.Types.ObjectId(userId),
+      });
+      let result = await newTodo.save();
+
+      return result;
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
   login: async (parent, args, ctx, info) => {
     await connectToDatabase();
     try {
