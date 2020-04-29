@@ -5,7 +5,7 @@ const query = {
   users: async (parent, args, ctx, info) => {
     await connectToDatabase();
     let users = await User.find({});
-    console.log(users);
+    //console.log(users);
     return users;
   },
 };
