@@ -20,7 +20,7 @@ type User {
 type Todo {
   _id: ID!
   content: String
-  creator: User!
+  creator: User
 }
 type AuthPayload {
   token: String!
