@@ -3,6 +3,12 @@ import Todo from "../models/Todo";
 import { connectToDatabase } from "../db";
 const query = {
   hello: () => "hello",
+  todo: async (parent, args, ctx, info) => {
+    await connectToDatabase();
+    const todoId = args.id;
+    let todo = await Todo.findOne({ _id: todoId });
+    return todo;
+  },
   user: async (parent, args, ctx, info) => {
     await connectToDatabase();
     const email = args.email;
